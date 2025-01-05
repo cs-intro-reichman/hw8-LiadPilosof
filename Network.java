@@ -31,9 +31,14 @@ public class Network {
      *  If there is no such user, returns null.
      *  Notice that the method receives a String, and returns a User object. */
     public User getUser(String name) {
+        if(name == null){
+            return null;
+        }
+
         for (int i = 0; i < users.length; i++) {
-            if (users[i]!=null) {
-                if (users[i].getName().equals(name)) {
+            if (users[i] != null && users[i].getName() != null) 
+            {
+                if (users[i].getName().equalsIgnoreCase(name)) {
                     return users[i];
                 }
             }
@@ -51,7 +56,7 @@ public class Network {
         }
         for (int i = 0; i < users.length; i++) {
             if (users[i] != null) {
-                if (users[i].getName()==name) {
+                if (users[i].getName().equalsIgnoreCase(name)) {
                     return false;
                 }
             }
@@ -74,7 +79,7 @@ public class Network {
             return false;
         }
 
-        if (getUser(name1).follows(name2)) {
+        if (getUser(name1).follows(name2) || name1.equalsIgnoreCase(name2)) {
             return false;
         }
         getUser(name1).addFollowee(name2);
@@ -89,7 +94,7 @@ public class Network {
         int max =0;
         int index =-1;
         for (int i = 0; i < users.length; i++) {
-            if (max<user.countMutual(users[i])) {
+            if (max<user.countMutual(users[i]) && !users[i].getName().equalsIgnoreCase(name)) {
                 max=user.countMutual(users[i]);
                 index = i;
             }
@@ -100,6 +105,10 @@ public class Network {
     /** Computes and returns the name of the most popular user in this network: 
      *  The user who appears the most in the follow lists of all the users. */
     public String mostPopularUser() {
+        if (userCount == 0) {
+            return null;
+        }
+
         int max = followeeCount(users[0].getName());
         int index = 0;
 
@@ -136,12 +145,12 @@ public class Network {
 
        for (int i = 0; i < users.length; i++) {
         if (users[i] != null) {
-            str += users[i].getName()+" -> ";
+            str += users[i].getName()+" ->";
 
             arr = users[i].getfFollows();
             for (int j = 0; j < arr.length; j++) {
-                if (arr[i] != null) {
-                    str += arr[i]+", ";
+                if (arr[j] != null) {
+                    str += " "+ arr[j]+ " ";
                 }
             }
             str += "\n";

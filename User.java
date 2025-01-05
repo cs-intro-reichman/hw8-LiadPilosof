@@ -46,7 +46,7 @@
   
         for (int i = 0; i < follows.length; i++) {
             if (follows[i] != null) {
-                if(follows[i].equals(name)){
+                if(follows[i].equalsIgnoreCase(name)){
                     return true;
                 }
             }
@@ -80,7 +80,8 @@
     public boolean removeFollowee(String name) {
         for (int i = 0; i < follows.length; i++) {
             if (follows[i]!=null) {
-                if(follows[i].equals(name)){
+                if(follows[i].equalsIgnoreCase(name)){
+                    fCount--;
                     follows[i] = null;
                     return true;
                 }
@@ -101,7 +102,7 @@
          for (int i = 0; i < follows.length; i++) {
             for (int j = 0; j < arr.length; j++) {
                 if (follows[i] != null && arr[j] != null) {
-                    if (follows[i].equals(arr[j])) {
+                    if (follows[i].equalsIgnoreCase(arr[j])) {
                         counter++;
                     }
                 }
